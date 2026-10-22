@@ -1,0 +1,19 @@
+---
+import type { ProductCardView } from "../types/product-views";
+
+interface Props { product: ProductCardView }
+const { product } = Astro.props;
+---
+
+<article class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white transition duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_20px_45px_-30px_rgba(120,57,34,0.35)]" data-product-card data-search={product.name.toLocaleLowerCase("fa-IR")}>
+  <a href={`/products/${product.slug}/`} class="absolute inset-0 z-10 rounded-[inherit] focus-visible:outline-offset-[-3px]" aria-label={`جزئیات ${product.name}`}></a>
+  <div class="flex aspect-square shrink-0 items-center justify-center overflow-hidden bg-white p-4 sm:p-5">
+    {product.image && <img src={product.image.src} alt={product.image.alt} width={product.image.width} height={product.image.height} loading="lazy" class="h-full w-full object-contain transition duration-500 group-hover:scale-[1.04]" />}
+  </div>
+  <div class="flex flex-1 flex-col p-5 sm:p-6">
+    <p class="text-xs font-bold text-brand">سامانه سوخت‌رسانی</p>
+    <h3 class="mt-2 min-h-14 text-lg font-black leading-7 text-ink">{product.name}</h3>
+    <p class="mt-1 min-h-12 text-sm leading-6 text-muted">برای دریافت اطلاعات این محصول با واحد فروش در تماس باشید.</p>
+    <span class="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-extrabold text-ink transition-colors group-hover:text-brand">مشاهده اطلاعات محصول <span aria-hidden="true">←</span></span>
+  </div>
+</article>

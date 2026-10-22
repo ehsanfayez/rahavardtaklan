@@ -1,0 +1,16 @@
+/* About-page composition only; shared tokens preserve the current design system. */
+.about-page { color: var(--content); text-align: right; }
+.about-page :focus-visible { outline-color: var(--cta-gold-hover); }
+.about-container { width: 100%; max-width: 1320px; min-width: 0; margin-inline: auto; padding-inline: 16px; }
+.about-hero { color: white; background: radial-gradient(ellipse at 12% 65%,var(--brand-navy-soft),transparent 58%),linear-gradient(110deg,var(--brand-navy-soft),var(--brand-navy-deep) 70%); }
+.about-story { display: grid; grid-template-columns: minmax(0,1fr); align-items: center; gap: 24px; padding-block: 24px; }
+.about-eyebrow { border-inline-start: 3px solid var(--cta-gold); padding-inline-start: 16px; color: var(--content-muted); font-size: 14px; line-height: 1.8; font-weight: 600; }
+.about-heading { font-size: clamp(22px,2vw,28px); line-height: 1.65; font-weight: 800; }
+.about-photo { background: var(--surface-alt); }
+.about-photo img { height: auto; object-position: center top; }
+.about-photo-warehouse img { object-position: center; }
+.about-action { display: inline-flex; min-height: 44px; min-width: 180px; align-items: center; justify-content: center; gap: 12px; padding: 10px 24px; border-radius: var(--radius-control); background: var(--cta-gold); color: var(--brand-navy-deep); font-size: 14px; font-weight: 700; transition: background-color 150ms; }
+.about-action:hover { background: var(--cta-gold-hover); }
+.about-benefits { border-block: 1px solid var(--border-subtle); background: var(--surface-alt); }
+@media(min-width:640px) { .about-container { padding-inline: 24px; } }
+@media(min-width:1024px) { .about-container { padding-inline: 32px; } .about-story { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 36px; } .about-photo { aspect-ratio: 1.95; } .about-photo img { height: 100%; } .about-photo-warehouse { aspect-ratio: 2.6; } }

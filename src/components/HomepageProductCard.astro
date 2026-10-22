@@ -1,0 +1,22 @@
+---
+import type { HomeProductView } from "../types/product-views";
+
+interface Props {
+  product: HomeProductView;
+}
+
+const { product } = Astro.props;
+const searchText = `پمپ بنزین ${product.searchText}`;
+---
+
+<article class="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-lg border border-border-subtle bg-white transition duration-300 hover:-translate-y-0.5 hover:border-cta-gold/80 hover:shadow-soft" data-home-product data-search={searchText}>
+  <a href={`/products/${product.slug}/`} class="absolute inset-0 z-10 rounded-[inherit] focus-visible:outline-offset-[-3px]" aria-label={`مشاهده اطلاعات ${product.name}`}></a>
+  <div class="relative flex aspect-[1.45/1] shrink-0 items-center justify-center overflow-hidden bg-white p-1.5">
+    {product.image && <img src={product.image.src} alt={product.image.alt} width={product.image.width} height={product.image.height} loading="lazy" decoding="async" class="h-full w-full object-contain transition duration-500 group-hover:scale-[1.035]" />}
+  </div>
+  <div class="flex min-h-[88px] flex-1 flex-col border-t border-border-subtle p-2.5 sm:min-h-[92px]">
+    <p class="text-[9px] leading-4 font-normal text-content-muted">پمپ بنزین</p>
+    <h3 title={product.name} class="mt-1 line-clamp-2 min-h-5 text-[11px] leading-5 font-bold text-content sm:text-xs">{product.label}</h3>
+    <span class="home-product-cta mt-auto inline-flex w-fit max-w-full items-center gap-1.5 self-end rounded-md border border-cta-gold/45 px-2 py-1 text-[9px] leading-[14px] font-semibold whitespace-nowrap text-content transition-colors group-hover:border-cta-gold/75 group-hover:bg-cta-gold/10">مشاهده جزئیات <span aria-hidden="true">←</span></span>
+  </div>
+</article>

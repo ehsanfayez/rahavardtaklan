@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HomepageHeader from "../components/HomepageHeader.astro";
+import HomepageFooter from "../components/HomepageFooter.astro";
+import { company } from "../data/company";
+import { privacyPolicy } from "../data/privacy";
+import "../styles/privacy.css";
+const number = new Intl.NumberFormat("fa-IR");
+---
+<BaseLayout title={`حریم خصوصی | ${company.name}`} description={`پیش‌نویس سیاست حریم خصوصی ${company.name}؛ وضعیت فرم تماس، اطلاعات کاربران و خدمات شخص ثالث در نسخه فعلی سایت.`}>
+  <HomepageHeader activePath="/privacy/" />
+  <main class="privacy-page" dir="rtl">
+    <section class="privacy-hero" aria-labelledby="privacy-title">
+      <div class="privacy-container py-5 sm:py-6">
+        <nav class="flex flex-wrap items-center gap-2 text-xs leading-5 text-white/70" aria-label="مسیر صفحه"><a href="/" class="transition hover:text-cta-gold">صفحه اصلی</a><span aria-hidden="true">/</span><span aria-current="page" class="text-white">حریم خصوصی</span></nav>
+        <h1 id="privacy-title" class="mt-3 text-2xl leading-[1.6] font-black sm:text-3xl">حریم خصوصی</h1>
+        <p class="mt-2 text-base leading-[1.8] text-white/85">اطلاعات روشن درباره وضعیت فعلی سایت و ارتباط با {company.name}</p>
+      </div>
+    </section>
+    <article class="privacy-reading" aria-label="متن پیش‌نویس سیاست حریم خصوصی">
+      <div class="rounded-control border border-cta-gold/60 bg-cta-gold/10 px-4 py-4">
+        <p class="text-sm font-bold leading-7">پیش‌نویس قابل بازبینی</p>
+        <p class="mt-1 text-base leading-[1.8]">{privacyPolicy.notice}</p>
+      </div>
+      <p class="mt-3 text-sm leading-7 text-content-muted">آخرین به‌روزرسانی: {privacyPolicy.lastUpdated ? <time datetime={privacyPolicy.lastUpdated}>{new Intl.DateTimeFormat("fa-IR", { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${privacyPolicy.lastUpdated}T00:00:00Z`))}</time> : "تاریخی ثبت نشده؛ در انتظار بازبینی شرکت"}</p>
+      <nav class="my-6 rounded-control border border-border-subtle bg-surface-alt p-4 sm:p-5" aria-labelledby="privacy-contents-title">
+        <h2 id="privacy-contents-title" class="text-lg font-bold leading-8">دسترسی سریع به بخش‌ها</h2>
+        <ol class="mt-3 grid gap-x-5 sm:grid-cols-2">
+          {privacyPolicy.sections.map((section, index) => <li><a href={`#${section.id}`} class="flex min-h-11 items-start gap-2 rounded-md py-2 text-sm leading-7 transition hover:text-content-muted"><span aria-hidden="true" class="text-cta-gold-hover">{number.format(index + 1)}.</span><span>{section.title}</span></a></li>)}
+        </ol>
+      </nav>
+      {privacyPolicy.sections.map((section, index) => <section id={section.id} class="privacy-section" tabindex="-1" aria-labelledby={`${section.id}-title`}>
+        <h2 id={`${section.id}-title`}><span aria-hidden="true" class="me-2 text-content-muted">{number.format(index + 1)}.</span>{section.title}</h2>
+        {section.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+        {section.links?.map(link => <p><a href={link.href} target="_blank" rel="noopener noreferrer" class="privacy-link" aria-label={`${link.label} (پنجره جدید)`}>{link.label} <span aria-hidden="true">↗</span></a></p>)}
+        {section.id === "company-contact" && <>
+          <dl class="mt-4 space-y-3 rounded-control border border-border-subtle bg-surface-alt p-4 text-base leading-[1.8]">
+            <div><dt class="font-bold">نام شرکت</dt><dd class="mt-1 text-content-muted">{company.name}</dd></div>
+            <div><dt class="font-bold">شماره واحد فروش</dt><dd class="mt-1"><a href={`tel:${company.phone}`} dir="ltr" class="privacy-link inline-flex min-h-11 items-center">{company.phoneDisplay}</a></dd></div>
+            <div><dt class="font-bold">نشانی شرکت</dt><dd class="mt-1 text-content-muted">{company.address}</dd></div>
+            <div><dt class="font-bold">ساعات کاری</dt><dd class="mt-1 text-content-muted">{company.workingHours.map(item => <div>{item.days}: {item.hours}</div>)}</dd></div>
+          </dl>
+          <p><a href="/contact/" class="privacy-link inline-flex min-h-11 items-center">مشاهده صفحه تماس با ما</a></p>
+        </>}
+      </section>)}
+    </article>
+  </main>
+  <HomepageFooter />
+</BaseLayout>

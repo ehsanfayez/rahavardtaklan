@@ -1,0 +1,28 @@
+---
+interface Props {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  image: { src: string; alt: string; width: number; height: number };
+  action: { label: string; href: string };
+  variant?: "introduction" | "cooperation";
+}
+const { id, eyebrow, title, description, image, action, variant = "introduction" } = Astro.props;
+---
+<section class="about-container about-story" aria-labelledby={id}>
+  <div class="min-w-0">
+    <p class="about-eyebrow">{eyebrow}</p>
+    <h2 id={id} class="about-heading mt-3">{title}</h2>
+    <p class="mt-4 text-base leading-[1.8] text-content-muted">{description}</p>
+    <div class="mt-4 flex lg:justify-end">
+    <a href={action.href} class="about-action">
+      {action.label}
+      {variant === "cooperation" ? <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current" stroke-width="1.8"><path d="m7 3 3 5-2.2 2.2a15 15 0 0 0 6 6L16 14l5 3-1 4C10 22 2 14 3 4l4-1Z" stroke-linejoin="round"/></svg> : <span aria-hidden="true">←</span>}
+    </a>
+    </div>
+  </div>
+  <div class:list={["about-photo overflow-hidden rounded-control border border-border-subtle", variant === "cooperation" && "about-photo-warehouse"]}>
+    <img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" class="block h-full w-full object-cover" />
+  </div>
+</section>

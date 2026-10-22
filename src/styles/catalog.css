@@ -1,0 +1,53 @@
+/* Catalog-only rules: the homepage and shared design tokens stay unchanged. */
+.catalog-page { background: var(--canvas-light); color: var(--content); }
+.catalog-page :focus-visible { outline-color: var(--cta-gold-hover); }
+.catalog-container { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: 16px; }
+.catalog-hero { min-height: 164px; }
+.catalog-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background-image: linear-gradient(90deg, var(--brand-navy) 10%, rgb(8 19 28 / 80%) 49%, rgb(8 19 28 / 20%) 100%), url('/images/fuel-gauge-reference.png');
+  background-position: center, right 58%; background-size: cover, 360px auto; background-repeat: no-repeat;
+}
+.catalog-hero::after {
+  content: ""; position: absolute; inset: 0 22% 0 42%; z-index: -2; opacity: .25;
+  background: repeating-linear-gradient(90deg, transparent 0 27px, #57636c 29px 35px, #172431 38px 43px, transparent 46px 75px);
+  filter: blur(4px);
+}
+.catalog-hero-copy { width: fit-content; max-width: 76%; text-align: right; }
+.catalog-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
+.catalog-sidebar, .catalog-results { min-width: 0; }
+.catalog-grid { display: grid; grid-template-columns: minmax(0, 1fr); grid-auto-rows: 1fr; gap: 14px; direction: rtl; }
+.catalog-card { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); min-height: 190px; }
+.catalog-card[hidden] { display: none; }
+.catalog-card-copy { display: flex; flex-direction: column; align-items: start; gap: 0; padding: 16px 12px 12px 4px; min-width: 0; }
+.catalog-card-image { min-width: 0; padding: 10px 4px 10px 8px; height: 100%; min-height: 188px; }
+.catalog-card-image img { max-height: 190px; }
+.catalog-control { display: block; min-width: 0; width: 100%; min-height: 44px; border: 1px solid var(--border-strong); border-radius: var(--radius-control); background: white; padding: 10px 12px; font-size: 14px; color: var(--content); }
+.catalog-control:focus-visible { outline-color: var(--cta-gold-hover); }
+.catalog-control:disabled { background: var(--surface-alt); color: var(--content-muted); cursor: not-allowed; opacity: 1; }
+.catalog-sort { width: 150px; min-height: 40px; padding-block: 7px; }
+.catalog-page-link { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 40px; padding: 6px; border: 1px solid var(--border-subtle); border-radius: 999px; background: white; font-size: 14px; }
+.catalog-page-link:hover:not([aria-disabled]) { border-color: var(--cta-gold); }
+.catalog-page-link[aria-current="page"] { background: var(--cta-gold); border-color: var(--cta-gold); font-weight: 700; }
+.catalog-page-link[aria-disabled="true"] { opacity: .4; cursor: default; }
+.catalog-contact { border-bottom: 1px solid rgb(255 255 255 / 20%); }
+.catalog-contact::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .32; background: linear-gradient(90deg, transparent, var(--brand-navy) 40%), url('/images/banners/about-car.webp') left center / auto 280% no-repeat; }
+@media (min-width: 640px) {
+  .catalog-container { padding-inline: 24px; }
+  .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .catalog-container { padding-inline: 32px; }
+  .catalog-layout { grid-template-columns: 264px minmax(0, 1fr); gap: 22px; }
+  .catalog-filters > summary { cursor: default; pointer-events: none; }
+  .catalog-filter-chevron { display: none; }
+}
+@media (min-width: 1200px) {
+  .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 639px) {
+  .catalog-hero-copy { max-width: 100%; }
+  .catalog-hero::before { background-image: linear-gradient(90deg, var(--brand-navy) 0%, rgb(8 19 28 / 94%) 65%, rgb(8 19 28 / 80%) 100%), url('/images/fuel-gauge-reference.png'); background-size: cover, 220px auto; }
+  .catalog-toolbar { align-items: start; }
+  .catalog-sort { width: 144px; }
+}

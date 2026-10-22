@@ -1,0 +1,240 @@
+---
+import HomepageFooter from "../components/HomepageFooter.astro";
+import HomepageHeader from "../components/HomepageHeader.astro";
+import HomepageProductCard from "../components/HomepageProductCard.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { company } from "../data/company";
+import { listHomeProducts } from "../lib/product-detail-repository";
+
+const homeProducts = listHomeProducts();
+const initialCount = new Intl.NumberFormat("fa-IR").format(homeProducts.length);
+---
+
+<BaseLayout title={`${company.name} | کاتالوگ قطعات خودرو`} description="کاتالوگ همکاری تجاری رهاورد تکلان برای معرفی محصولات مرتبط با پمپ بنزین و مجموعه درجه باک خودرو.">
+  <HomepageHeader />
+  <main>
+    <section class="home-hero relative isolate overflow-hidden bg-brand-navy-deep text-white" aria-labelledby="home-hero-title">
+      <div dir="ltr" class="relative z-10 mx-auto flex max-w-[1320px] flex-col items-start gap-5 px-4 py-7 pb-[33.333vw] sm:px-6 md:min-h-[310px] md:justify-center md:gap-5 md:py-3 md:pb-3 md:pl-[7%] lg:px-8 lg:pl-[9%]">
+        <div dir="rtl" class="home-hero-copy max-w-[520px] text-right">
+          <p class="home-hero-intro inline-flex items-center gap-2 text-[10px] font-normal text-white"><span aria-hidden="true" class="h-px w-6 bg-white/40"></span>رهاورد تکلان | کیفیت در مسیر حرکت شما</p>
+          <h1 id="home-hero-title" class="mt-2.5 max-w-[620px] text-right text-2xl leading-[1.5] font-black tracking-tight sm:text-3xl lg:text-[1.8rem]">تأمین و عرضه<br /><span class="text-cta-gold">پمپ بنزین و مجموعه درجه باک خودرو</span></h1>
+          <p class="home-hero-description mt-3 max-w-lg text-right text-xs leading-[1.9] text-white/90 sm:text-sm">معرفی محصولات مرتبط با سیستم سوخت خودرو برای فروشگاه‌ها، توزیع‌کنندگان و خریداران تجاری.</p>
+          <div class="home-hero-actions mt-4 flex flex-wrap items-center gap-2.5">
+            <a href="/products/" class="inline-flex h-10 items-center justify-center gap-2 rounded-control bg-cta-gold px-3 text-[10px] font-black text-brand-navy-deep transition hover:bg-cta-gold-hover focus-visible:outline-white sm:px-5 sm:text-[11px]">مشاهده محصولات <span aria-hidden="true">←</span></a>
+            <a href={`tel:${company.phone}`} class="inline-flex h-10 items-center justify-center gap-2 rounded-control border border-white/45 px-3 text-[10px] font-bold text-white transition hover:border-white hover:bg-white/10 focus-visible:outline-white sm:px-5 sm:text-[11px]">تماس با واحد فروش <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 shrink-0 fill-none stroke-current" stroke-width="1.8"><path d="M7 3H4.8A1.8 1.8 0 0 0 3 4.8C3 13.7 10.3 21 19.2 21a1.8 1.8 0 0 0 1.8-1.8V17l-4.6-1.2-1.7 2.2a16 16 0 0 1-6.7-6.7L10.2 9 9 4.4 7 3Z" stroke-linejoin="round" /></svg></a>
+          </div>
+        </div>
+        <div dir="rtl" class="home-hero-benefits grid w-full max-w-[520px] grid-cols-3 gap-2">
+          <div class="flex min-w-0 flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-2"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 fill-none stroke-white" stroke-width="1.7"><path d="M4 13v-1a8 8 0 0 1 16 0v1M4 12H3v6h4v-6H4Zm16 0h1v6h-4v-6h3ZM20 18c0 2-2 3-5 3h-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="leading-4"><strong class="block text-[10px] font-bold text-white sm:text-[11px]">پشتیبانی تخصصی</strong><span class="block text-[8px] text-white/65 sm:text-[9px]">مشاوره و راهنمایی فنی</span></span></div>
+          <div class="flex min-w-0 flex-col items-start gap-1 border-x border-white/15 px-2 sm:flex-row sm:items-center sm:gap-2"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 fill-none stroke-white" stroke-width="1.7"><path d="M3 5h11v12H3V5Zm11 5h4l3 4v3h-7v-7Z" stroke-linejoin="round"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M1 9h5M1 12h3" stroke-linecap="round"/></svg><span class="leading-4"><strong class="block text-[10px] font-bold text-white sm:text-[11px]">ارسال سریع</strong><span class="block text-[8px] text-white/65 sm:text-[9px]">به سراسر کشور</span></span></div>
+          <div class="flex min-w-0 flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-2"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 fill-none stroke-white" stroke-width="1.7"><path d="M12 3 4.5 6v5.2c0 4.6 3.2 7.8 7.5 9.8 4.3-2 7.5-5.2 7.5-9.8V6L12 3Z"/><path d="m9 12 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="leading-4"><strong class="block text-[10px] font-bold text-white sm:text-[11px]">تضمین کیفیت</strong><span class="block text-[8px] text-white/65 sm:text-[9px]">قطعات اصلی و با کیفیت</span></span></div>
+        </div>
+      </div>
+    </section>
+    <section id="featured-products" class="scroll-mt-24 bg-white" aria-labelledby="featured-products-title">
+      <div class="mx-auto max-w-[1320px] px-4 py-7 sm:px-6 sm:py-9 lg:px-8 lg:py-10">
+        <div dir="ltr" class="grid gap-4 lg:grid-cols-[minmax(170px,220px)_minmax(0,1fr)] lg:gap-5 xl:grid-cols-[220px_minmax(0,1fr)_250px]">
+          <aside dir="rtl" class="order-2 rounded-xl border border-border-subtle bg-white p-3 shadow-soft lg:order-1 lg:row-start-1 lg:col-start-1 lg:p-4" aria-labelledby="home-filter-title">
+            <div class="flex items-center justify-between gap-2"><h3 id="home-filter-title" class="text-[13px] font-black text-content">فیلتر محصولات</h3><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-content" stroke-width="1.8"><path d="M4 5h16l-6.5 7.2V19l-3 1v-7.8L4 5Z" stroke-linejoin="round"/></svg></div>
+            <label for="home-product-search" class="sr-only">جست‌وجو در محصولات</label>
+            <div class="mt-3 flex items-center rounded-control border border-border-subtle px-3 py-2.5 transition focus-within:border-cta-gold focus-within:ring-2 focus-within:ring-cta-gold/15"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-3.5 w-3.5 shrink-0 fill-none stroke-content-muted" stroke-width="1.8"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2" stroke-linecap="round"/></svg><input id="home-product-search" type="search" autocomplete="off" placeholder="جست‌وجو در محصولات..." class="min-w-0 flex-1 bg-transparent px-2 text-[11px] text-content outline-none placeholder:text-content-muted" /></div>
+            <p class="mt-4 text-[11px] font-black text-content">دسته‌بندی</p>
+            <ul class="mt-2 space-y-1.5 text-[11px]"><li><a href="/products/" class="flex items-center justify-between rounded-md border-r-[3px] border-cta-gold bg-[#fff8e8] px-2.5 py-2.5 font-bold text-content transition hover:bg-[#fff2cf]"><span>پمپ بنزین</span><span class="rounded-full bg-cta-gold px-1.5 py-0.5 text-[9px]">{initialCount}</span></a></li><li><span aria-disabled="true" class="flex items-center justify-between rounded-md px-2.5 py-2.5 text-content-muted"><span>مجموعه درجه باک</span><span class="text-[9px]">در حال تکمیل</span></span></li><li><span aria-disabled="true" class="flex items-center justify-between rounded-md px-2.5 py-2.5 text-content-muted"><span>قطعات جانبی</span><span class="text-[9px]">—</span></span></li></ul>
+            <div class="mt-3 border-t border-border-subtle pt-3"><label for="home-brand-filter" class="block text-[11px] font-bold text-content">برند خودرو</label><select id="home-brand-filter" disabled class="mt-1.5 w-full cursor-not-allowed rounded-md border border-border-subtle bg-[#f8f9fa] px-2.5 py-2.5 text-[10px] text-content-muted"><option>پس از تأیید داده‌ها</option></select><label for="home-model-filter" class="mt-3 block text-[11px] font-bold text-content">مدل خودرو</label><select id="home-model-filter" disabled class="mt-1.5 w-full cursor-not-allowed rounded-md border border-border-subtle bg-[#f8f9fa] px-2.5 py-2.5 text-[10px] text-content-muted"><option>پس از تأیید داده‌ها</option></select></div>
+            <button id="home-filter-reset" type="button" class="mt-3 min-h-10 w-full rounded-control bg-cta-gold px-3 py-2.5 text-[11px] font-black text-brand-navy-deep transition hover:bg-cta-gold-hover focus-visible:outline-content">پاک‌کردن جست‌وجو</button>
+          </aside>
+
+          <div dir="rtl" class="order-1 min-w-0 lg:order-2 lg:row-start-1 lg:col-start-2 xl:col-start-2">
+            <div class="mb-3 flex flex-col gap-2 border-b border-border-subtle pb-3 sm:flex-row sm:items-end sm:justify-between"><div><p class="text-[9px] font-black text-cta-gold-hover">مرور کاتالوگ</p><h2 id="featured-products-title" class="mt-1 text-lg font-black text-content sm:text-xl">محصولات منتخب</h2><p class="mt-1 text-[9px] leading-5 text-content-muted sm:text-[10px]">برای دریافت اطلاعات هر محصول، با واحد فروش در ارتباط باشید.</p></div><a href="/products/" class="inline-flex w-fit items-center gap-2 text-[9px] font-extrabold text-cta-gold-hover transition hover:text-content">مشاهده همه محصولات <span aria-hidden="true">←</span></a></div>
+            <div class="mb-3 flex items-center justify-between gap-3"><p id="home-product-count" class="text-[10px] text-content-muted">{initialCount} محصول در کاتالوگ نمایشی</p><span class="hidden text-[9px] font-semibold text-content-muted sm:inline">اطلاعات فنی نیازمند تأیید شرکت است</span></div>
+            <div class="grid grid-cols-2 items-stretch gap-2.5 sm:grid-cols-3 xl:grid-cols-4 lg:gap-3">{homeProducts.map((product) => <HomepageProductCard product={product} />)}</div>
+            <p id="home-empty-results" class="mt-4 hidden rounded-lg border border-dashed border-border-strong px-4 py-7 text-center text-xs text-content-muted" role="status">محصولی با این عبارت پیدا نشد.</p><p class="mt-3 text-[9px] leading-5 text-content-muted sm:hidden">اطلاعات فنی محصولات نیازمند تأیید شرکت است.</p><noscript><p class="mt-3 text-[10px] text-content-muted">برای جست‌وجوی لحظه‌ای، JavaScript مرورگر را فعال کنید.</p></noscript>
+          </div>
+
+          <aside dir="rtl" class="order-3 grid grid-cols-2 gap-3 lg:col-span-2 lg:col-start-1 lg:row-start-2 xl:col-span-1 xl:col-start-3 xl:row-start-1 xl:grid-cols-1 xl:content-start" aria-label="دسترسی به گروه محصولات">
+            <a href="/products/" class="home-promo-dark group relative flex min-h-[145px] overflow-hidden rounded-lg bg-brand-navy bg-cover bg-center text-white sm:min-h-[175px] xl:min-h-[205px]" style="background-image:url('/images/banners/promo-dark.webp')">
+              <span aria-hidden="true" class="absolute inset-0 bg-gradient-to-r from-brand-navy/35 via-transparent to-transparent"></span>
+              <span class="absolute top-3 left-3 flex w-[40%] flex-col gap-0.5 text-right sm:top-4 sm:left-4 sm:gap-1.5 xl:top-6">
+                <span class="text-[10px] leading-4 font-medium text-white/90 sm:text-xs">تکنولوژی</span>
+                <span class="text-[17px] leading-[1.3] font-black sm:text-xl xl:text-[22px]">دقت<br />دوام</span>
+                <span class="text-[8px] leading-3 font-medium text-white/80 sm:text-[10px] sm:leading-4">کیفیت در هر قطعه</span>
+              </span>
+              <span class="home-promo-dark-cta absolute bottom-3 left-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-cta-gold text-sm font-black text-brand-navy-deep shadow-sm transition group-hover:scale-105 group-hover:bg-cta-gold-hover sm:bottom-4 sm:left-4 sm:h-8 sm:w-8 xl:left-5" aria-hidden="true">←</span>
+              <span class="sr-only">مشاهده محصولات</span>
+            </a>
+            <a href="/products/" class="home-promo-gold group relative flex min-h-[145px] overflow-hidden rounded-lg bg-cta-gold bg-cover bg-left text-brand-navy-deep sm:min-h-[175px] xl:min-h-[155px]" style="background-image:url('/images/banners/promo-gold.webp')">
+              <span aria-hidden="true" class="absolute inset-0 bg-gradient-to-l from-cta-gold/10 via-transparent to-transparent"></span>
+              <span class="absolute top-3 right-3 flex w-[52%] flex-col gap-1 text-right sm:top-4 sm:right-4">
+                <span class="text-xs leading-[1.45] font-black sm:text-sm">مجموعه درجه<br /> باک</span>
+                <span class="text-[9px] leading-[1.65] font-medium text-white/90 [text-shadow:0_1px_2px_var(--brand-navy)] sm:text-[10px]">سنسور سطح<br />سوخت و نمایشگر</span>
+              </span>
+              <span class="home-promo-gold-cta absolute right-3 bottom-3 inline-flex h-7 w-[calc(100%_-_1.5rem)] max-w-[145px] items-center justify-center gap-1.5 rounded-md bg-brand-navy px-3 text-[9px] font-bold whitespace-nowrap text-white transition group-hover:bg-brand-navy-soft sm:right-4 sm:bottom-4 sm:h-8 sm:text-[10px]">مشاهده محصولات <span aria-hidden="true">←</span></span>
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-lower border-y border-border-subtle bg-[#fbfbfa]" aria-label="درباره شرکت، مزایا و مسیر همکاری">
+      <div dir="ltr" class="mx-auto grid max-w-[1320px] items-stretch gap-x-0 gap-y-4 px-4 sm:px-6 lg:grid-cols-[1.2fr_0.86fr_1fr] lg:gap-y-0 lg:pl-0 lg:pr-8">
+        <section dir="rtl" class="home-about relative order-1 isolate flex h-full min-w-0 min-h-[180px] flex-col justify-center text-white md:min-h-[190px] lg:min-h-[156px]" aria-labelledby="home-about-title">
+          <div aria-hidden="true" class="home-about-image"></div>
+          <div aria-hidden="true" class="home-about-diagonal"></div>
+          <div class="home-about-content">
+            <p class="text-[9px] font-bold text-cta-gold">درباره رهاورد تکلان</p>
+            <h2 id="home-about-title" class="mt-1 text-[15px] leading-6 font-black sm:text-base">همراه در مسیر تأمین قطعات</h2>
+            <p class="mt-1.5 text-[10px] leading-[1.8] text-white/80">مرور کاتالوگ محصولات و ارتباط با واحد فروش برای دریافت اطلاعات موردنیاز.</p>
+            <a href="/about/" class="mt-2 inline-flex min-h-8 items-center gap-2 rounded-md border border-white/45 bg-white/5 px-3 py-1.5 text-[10px] font-bold transition hover:border-cta-gold hover:bg-cta-gold hover:text-brand-navy-deep focus-visible:outline-white">بیشتر بدانید <span aria-hidden="true">←</span></a>
+          </div>
+        </section>
+
+        <section dir="rtl" class="order-2 flex h-full min-w-0 min-h-[136px] flex-col px-2 py-3 md:min-h-[144px] lg:min-h-[156px] lg:px-3 lg:py-3" aria-labelledby="home-why-title">
+          <h2 id="home-why-title" class="px-1.5 text-right text-sm leading-5 font-black text-content">چرا رهاورد تکلان؟</h2>
+          <div class="mt-3 grid grid-cols-3">
+            <article class="px-1.5 text-center"><span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#fff2cf] text-cta-gold-hover"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current" stroke-width="1.8"><path d="M4 13v-1a8 8 0 0 1 16 0v1M4 12H3v6h4v-6H4Zm16 0h1v6h-4v-6h3ZM20 18c0 2-2 3-5 3h-3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3 class="mt-1.5 text-[10px] leading-4 font-black text-content">پشتیبانی مشتریان</h3><p class="mt-0.5 text-[9px] leading-4 text-content-muted">مشاوره و راهنمایی</p></article>
+            <article class="px-1.5 text-center"><span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#fff2cf] text-cta-gold-hover"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current" stroke-width="1.8"><circle cx="12" cy="8" r="5"/><path d="m8 12-2 9 6-3 6 3-2-9M12 5v6M9 8h6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3 class="mt-1.5 text-[10px] leading-4 font-black text-content">تجربه و تخصص</h3><p class="mt-0.5 text-[9px] leading-4 text-content-muted">تیم فنی مجرب</p></article>
+            <article class="px-1.5 text-center"><span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-[#fff2cf] text-cta-gold-hover"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current" stroke-width="1.8"><path d="M12 3 4.5 6v5.2c0 4.6 3.2 7.8 7.5 9.8 4.3-2 7.5-5.2 7.5-9.8V6L12 3Z"/><path d="m9 12 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3 class="mt-1.5 text-[10px] leading-4 font-black text-content">کیفیت قطعات</h3><p class="mt-0.5 text-[9px] leading-4 text-content-muted">استاندارد و مطمئن</p></article>
+          </div>
+        </section>
+
+        <section dir="rtl" class="order-3 flex h-full min-w-0 min-h-[152px] flex-col px-2 py-3 md:min-h-[160px] lg:min-h-[156px] lg:px-3 lg:py-3" aria-labelledby="home-process-title">
+          <h2 id="home-process-title" class="text-sm leading-5 font-black text-content">مراحل همکاری با ما</h2>
+          <div class="home-process-group relative mt-3 lg:-right-3">
+            <span aria-hidden="true" class="absolute top-4 right-[16.67%] left-[16.67%] h-px bg-border-strong/70"></span>
+            <ol class="grid grid-cols-3">
+              <li class="relative z-10 text-center"><span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#fbfbfa] bg-cta-gold text-[10px] font-black text-brand-navy-deep">۱</span><h3 class="mt-1.5 text-[10px] leading-4 font-black text-content">تماس با ما</h3><p class="mt-0.5 text-[9px] leading-4 text-content-muted">ثبت درخواست</p></li>
+              <li class="relative z-10 text-center"><span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#fbfbfa] bg-cta-gold text-[10px] font-black text-brand-navy-deep">۲</span><h3 class="mt-1.5 text-[10px] leading-4 font-black text-content">بررسی و مشاوره</h3><p class="mt-0.5 text-[9px] leading-4 text-content-muted">به صورت تخصصی</p></li>
+              <li class="relative z-10 text-center"><span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#fbfbfa] bg-cta-gold text-[10px] font-black text-brand-navy-deep">۳</span><h3 class="mt-1.5 text-[10px] leading-4 font-black text-content">معرفی محصولات</h3><p class="mt-0.5 text-[9px] leading-4 text-content-muted">و شرایط همکاری</p></li>
+            </ol>
+          </div>
+          <a href="/contact/" class="mt-auto inline-flex min-h-6 w-fit items-center gap-1.5 text-[9px] font-extrabold text-cta-gold-hover transition hover:text-content">شروع ارتباط <span aria-hidden="true">←</span></a>
+        </section>
+      </div>
+    </section>
+  </main>
+  <HomepageFooter />
+</BaseLayout>
+
+<script>
+  import { normalize as normalizeSearch } from "../lib/product-search";
+  const searchInputs = [document.querySelector<HTMLInputElement>("#home-product-search")].filter((input): input is HTMLInputElement => input !== null);
+  const productCards = Array.from(document.querySelectorAll<HTMLElement>("[data-home-product]"));
+  const productCount = document.querySelector<HTMLElement>("#home-product-count");
+  const emptyProducts = document.querySelector<HTMLElement>("#home-empty-results");
+  const formatNumber = new Intl.NumberFormat("fa-IR");
+  const filterProducts = (source: HTMLInputElement) => {
+    const query = normalizeSearch(source.value); let count = 0;
+    for (const card of productCards) { const matches = normalizeSearch(card.dataset.search ?? "").includes(query); card.hidden = !matches; if (matches) count += 1; }
+    for (const input of searchInputs) if (input !== source) input.value = source.value;
+    if (productCount) productCount.textContent = `${formatNumber.format(count)} محصول در کاتالوگ نمایشی`;
+    emptyProducts?.classList.toggle("hidden", count !== 0);
+  };
+  for (const input of searchInputs) input.addEventListener("input", () => filterProducts(input));
+  document.querySelector<HTMLButtonElement>("#home-filter-reset")?.addEventListener("click", () => { const source = searchInputs[0]; if (!source) return; source.value = ""; filterProducts(source); source.focus(); });
+</script>
+
+<style>
+  .home-lower {
+    container-type: inline-size;
+  }
+
+  .home-about {
+    --about-cut: 7%;
+  }
+
+  /* Both graphic layers end on the same diagonal; the text is never clipped. */
+  .home-about-image,
+  .home-about-diagonal {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .home-about-image {
+    z-index: 0;
+    background: linear-gradient(90deg, rgb(8 19 28 / 18%), rgb(8 19 28 / 12%) 20%, var(--brand-navy) 72%),
+      url("/images/banners/about-car.webp") left center / cover no-repeat;
+    clip-path: polygon(0 0, calc(100% - var(--about-cut)) 0, 100% 100%, 0 100%);
+  }
+
+  .home-about-diagonal {
+    z-index: 1;
+    background: var(--brand-navy);
+    clip-path: polygon(32% 0, calc(100% - var(--about-cut)) 0, 100% 100%, 32% 100%);
+  }
+
+  .home-about-content {
+    position: relative;
+    z-index: 2;
+    width: 72%;
+    margin-left: auto;
+    padding: 14px calc(var(--about-cut) + 12px) 14px 12px;
+  }
+
+  @media (min-width: 1024px) {
+    .home-about {
+      --about-cut: 14%;
+    }
+
+    .home-about-content {
+      width: 70%;
+    }
+
+    .home-about-image {
+      /* Extend only the visual to the full-width frame; keep the cut and content fixed. */
+      --about-bleed: max(0px, calc((100cqw - 1320px) / 2));
+      left: calc(0px - var(--about-bleed));
+      clip-path: polygon(0 0, calc(86% + var(--about-bleed) * 0.14) 0, 100% 100%, 0 100%);
+    }
+  }
+
+  .home-hero::after {
+    position: absolute;
+    z-index: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    aspect-ratio: 3 / 1;
+    background: url("/images/banners/hero-banner.webp") center / cover no-repeat;
+    content: "";
+    pointer-events: none;
+  }
+
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .home-hero {
+      padding-bottom: 240px;
+    }
+
+    .home-hero::after {
+      height: 220px;
+      aspect-ratio: auto;
+      background-position: center 47%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-hero-copy,
+    .home-hero-benefits {
+      max-width: min(520px, 36vw);
+    }
+
+    .home-hero {
+      background-image: linear-gradient(90deg, rgba(7, 17, 26, 0.12), transparent 62%), url("/images/banners/hero-banner.webp");
+      background-position: center 54%;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .home-hero::after {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .home-hero-benefits > div {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+  }
+</style>

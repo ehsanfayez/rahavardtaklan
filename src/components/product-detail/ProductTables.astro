@@ -1,0 +1,31 @@
+---
+import type { ProductDetail } from "../../types/product-detail";
+interface Props { product: ProductDetail }
+const { product } = Astro.props;
+const specifications = [...product.specifications]
+  .filter(item => item.value.trim())
+  .sort((a, b) => (a.displayOrder ?? Number.MAX_SAFE_INTEGER) - (b.displayOrder ?? Number.MAX_SAFE_INTEGER));
+const hasEngine = product.compatibleVehicles.some(vehicle => Boolean(vehicle.engine?.trim()));
+---
+<div class="detail-tables">
+  <section class="detail-panel min-w-0" aria-labelledby="detail-specifications-title">
+    <h2 id="detail-specifications-title" class="detail-section-title"><span aria-hidden="true">⚙</span> مشخصات فنی</h2>
+    {specifications.length ? <table class="detail-table detail-specifications">
+      <caption class="sr-only">مشخصات ارائه‌شده محصول{product.dataStatus !== "approved" ? "؛ نمایشی و تأییدنشده" : ""}</caption>
+      <tbody>{specifications.map(item => <tr data-specification-key={item.key}><th scope="row">{item.label}</th><td><bdi>{item.value}</bdi>{item.unit && <> <bdi>{item.unit}</bdi></>}</td></tr>)}</tbody>
+    </table> : <div class="detail-empty"><p>مشخصات فنی تأییدشده برای این محصول ارائه نشده است.</p></div>}
+  </section>
+  <section class="detail-panel min-w-0" aria-labelledby="detail-fitments-title">
+    <h2 id="detail-fitments-title" class="detail-section-title"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.6"><path d="m5 9 2-5h10l2 5M4 10h16v9H4zM7 19v2m10-2v2M7 14h2m6 0h2" stroke-linecap="round" stroke-linejoin="round"/></svg> خودروهای سازگار</h2>
+    {product.compatibleVehicles.length ? <>
+      <div class="detail-table-scroll" tabindex="0" role="region" aria-label="جدول خودروهای سازگار؛ در عرض کوچک قابل پیمایش افقی است">
+        <table class="detail-table detail-fitments">
+          <caption class="sr-only">خودروهای ذکرشده؛ سازگاری قطعی نیازمند تأیید است</caption>
+          <thead><tr><th scope="col">برند خودرو</th><th scope="col">مدل</th><th scope="col">سال</th><th scope="col">تیپ</th>{hasEngine && <th scope="col">موتور</th>}<th scope="col">محدودیت‌ها</th></tr></thead>
+          <tbody>{product.compatibleVehicles.map(vehicle => <tr><td><bdi>{vehicle.make}</bdi></td><td><bdi>{vehicle.model}</bdi></td><td>{vehicle.yearFrom !== undefined && vehicle.yearTo !== undefined ? <><bdi dir="ltr">{vehicle.yearFrom}</bdi> تا <bdi dir="ltr">{vehicle.yearTo}</bdi></> : <bdi dir="ltr">{vehicle.yearFrom ?? vehicle.yearTo ?? "—"}</bdi>}</td><td><bdi>{vehicle.trims?.join("، ") || "—"}</bdi></td>{hasEngine && <td><bdi>{vehicle.engine || "—"}</bdi></td>}<td>{vehicle.notes || "—"}</td></tr>)}</tbody>
+        </table>
+      </div>
+      <p class="mt-4 text-sm leading-7 text-content-muted">تطبیق شماره فنی، نوع موتور و مشخصات خودرو پیش از انتخاب قطعه ضروری است.</p>
+    </> : <div class="detail-empty"><p>داده سازگاری تأییدشده برای این محصول موجود نیست.</p></div>}
+  </section>
+</div>

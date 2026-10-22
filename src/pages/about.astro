@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HomepageHeader from "../components/HomepageHeader.astro";
+import HomepageFooter from "../components/HomepageFooter.astro";
+import AboutStorySection from "../components/about/AboutStorySection.astro";
+import { company } from "../data/company";
+import { aboutPage } from "../data/about";
+import "../styles/about.css";
+---
+<BaseLayout title={`درباره ما | ${company.name}`} description="معرفی رهاورد تکلان، حوزه فعالیت در قطعات سیستم سوخت‌رسانی خودرو و مسیر همکاری با خریداران تجاری.">
+  <HomepageHeader activePath="/about/" />
+  <main class="about-page" dir="rtl">
+    <section class="about-hero" aria-labelledby="about-title">
+      <div class="about-container py-5 sm:py-6">
+        <nav class="flex flex-wrap items-center gap-2 text-xs leading-5 text-white/70" aria-label="مسیر صفحه"><a href="/" class="transition hover:text-cta-gold">صفحه اصلی</a><span aria-hidden="true">/</span><span aria-current="page" class="text-white">درباره ما</span></nav>
+        <h1 id="about-title" class="mt-3 text-2xl leading-[1.6] font-black sm:text-3xl">درباره {company.name}</h1>
+        <p class="mt-2 text-base leading-[1.8] text-white/85">تأمین مطمئن قطعات خودرو برای یک همکاری پایدار</p>
+      </div>
+    </section>
+
+    <AboutStorySection id="about-introduction" {...aboutPage.introduction} />
+
+    <section class="about-benefits" aria-labelledby="about-benefits-title">
+      <div class="about-container py-6 sm:py-7">
+        <p class="about-eyebrow">چرا {company.name}؟</p>
+        <h2 id="about-benefits-title" class="about-heading mt-3">مزایای همکاری با ما</h2>
+        <div class="mt-5 grid gap-4 lg:grid-cols-3">
+          {aboutPage.benefits.map(benefit => <article class="flex min-w-0 items-start gap-4 rounded-control border border-border-subtle bg-white p-5 shadow-soft">
+            <span class="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-cta-gold/10 text-cta-gold-hover">
+              <svg aria-hidden="true" viewBox="0 0 24 24" class="h-9 w-9 fill-none stroke-current" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                {benefit.icon === "quality" ? <><path d="m12 2 2.2 1.4 2.6.2 1.1 2.4 2.1 1.6-.4 2.6.8 2.5-1.7 2-.7 2.5-2.6.6-2.1 1.6-2.5-.8-2.6.3-1.6-2.1-2.4-1.1-.2-2.6L2 11l1.4-2.2.2-2.6L6 5.1l1.6-2.1 2.6.4L12 2Z"/><circle cx="11.5" cy="10.5" r="3.5"/><path d="m7 18-1 4 5-2 4 2 1-4"/></> : benefit.icon === "shield" ? <><path d="M12 3c3 2 5 2 8 3v6c0 4-4 7-8 9-4-2-8-5-8-9V6c3-1 5-1 8-3Z"/><path d="m8 12 3 3 5-6"/></> : <><path d="M4 14v-3a8 8 0 0 1 16 0v3M4 12H3v7h4v-7H4Zm16 0h1v7h-4v-7h3Zm0 7c0 2-3 3-6 3h-2"/><path d="M12 21h3v2h-3z"/></>}
+              </svg>
+            </span>
+            <div class="min-w-0"><h3 class="text-lg leading-[1.8] font-bold">{benefit.title}</h3><p class="mt-2 text-base leading-[1.8] text-content-muted">{benefit.description}</p></div>
+          </article>)}
+        </div>
+      </div>
+    </section>
+
+    <AboutStorySection id="about-cooperation" {...aboutPage.cooperation} variant="cooperation" />
+  </main>
+  <HomepageFooter />
+</BaseLayout>

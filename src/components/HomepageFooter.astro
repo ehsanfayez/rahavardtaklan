@@ -1,0 +1,46 @@
+---
+import { company } from "../data/company";
+
+const phoneHref = `tel:${company.phone}`;
+---
+
+<footer class="bg-brand-navy-deep text-white">
+  <div class="mx-auto grid max-w-[1320px] items-start gap-x-5 gap-y-4 px-4 py-4 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.18fr_0.7fr_0.95fr_1.45fr] lg:gap-7 lg:px-8">
+    <section class="lg:order-4" aria-labelledby="home-footer-company">
+      <a href="/" class="inline-flex items-center gap-2.5" aria-label={`${company.name}، صفحه اصلی`}>
+        <span class="brand-mark h-10 w-10 rounded-lg border-0"><img src="/Logo.png" alt="" width="512" height="512" loading="lazy" /></span>
+        <span><span id="home-footer-company" class="block text-[15px] font-black">{company.name}</span><span class="mt-0.5 block text-[10px] text-white/55">تأمین‌کننده قطعات خودرو</span></span>
+      </a>
+      <p class="mt-2 max-w-sm text-[10px] leading-[1.8] text-white/60">معرفی محصولات مرتبط با پمپ بنزین و مجموعه درجه باک خودرو برای مخاطبان تجاری.</p>
+    </section>
+
+    <nav class="lg:order-3" aria-labelledby="home-footer-nav">
+      <h2 id="home-footer-nav" class="text-[11px] font-black text-cta-gold">دسترسی سریع</h2>
+      <ul class="mt-2 space-y-1 text-[10px] leading-[1.8] text-white/70">
+        <li><a href="/" class="transition hover:text-cta-gold">صفحه اصلی</a></li>
+        <li><a href="/products/" class="transition hover:text-cta-gold">محصولات</a></li>
+        <li><a href="/about/" class="transition hover:text-cta-gold">درباره ما</a></li>
+        <li><a href="/contact/" class="transition hover:text-cta-gold">تماس با ما</a></li>
+      </ul>
+    </nav>
+
+    <nav class="lg:order-2" aria-labelledby="home-footer-service">
+      <h2 id="home-footer-service" class="text-[11px] font-black text-cta-gold">خدمات مشتریان تجاری</h2>
+      <ul class="mt-2 space-y-1 text-[10px] leading-[1.8] text-white/70">
+        <li><a href="/contact/" class="transition hover:text-cta-gold">ارتباط با ما</a></li>
+        <li><a href="/contact/" class="transition hover:text-cta-gold">درخواست اطلاعات محصول</a></li>
+        <li><a href="/privacy/" class="transition hover:text-cta-gold">حریم خصوصی</a></li>
+      </ul>
+    </nav>
+
+    <section class="lg:order-1" aria-labelledby="home-footer-contact">
+      <h2 id="home-footer-contact" class="text-[11px] font-black text-cta-gold">اطلاعات شرکت</h2>
+      <dl class="mt-2 space-y-1 text-[10px] leading-[1.7] text-white/70">
+        <div class="relative ps-5"><dt class="inline font-bold text-white"><svg aria-hidden="true" viewBox="0 0 24 24" class="absolute top-0.5 right-0 h-3.5 w-3.5 fill-none stroke-white/70" stroke-width="1.7"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5"/></svg>نشانی: </dt><dd class="inline">{company.address}</dd></div>
+        <div class="relative ps-5"><dt class="inline font-bold text-white"><svg aria-hidden="true" viewBox="0 0 24 24" class="absolute top-0.5 right-0 h-3.5 w-3.5 fill-none stroke-white/70" stroke-width="1.7"><path d="m7 3 3 5-2.2 2.2a15 15 0 0 0 6 6L16 14l5 3-1 4C10 22 2 14 3 4l4-1Z" stroke-linecap="round" stroke-linejoin="round"/></svg>تلفن: </dt><dd class="inline"><a href={phoneHref} dir="ltr" class="inline-block transition hover:text-cta-gold">{company.phoneDisplay}</a></dd></div>
+        <div class="relative ps-5"><dt class="inline font-bold text-white"><svg aria-hidden="true" viewBox="0 0 24 24" class="absolute top-0.5 right-0 h-3.5 w-3.5 fill-none stroke-white/70" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg>ساعات کاری: </dt><dd class="inline">{company.workingHours.map((item) => `${item.days} ${item.hours}`).join(" · ")}</dd></div>
+      </dl>
+    </section>
+  </div>
+  <div class="border-t border-white/10 px-4 py-2 text-center text-[10px] text-white/45 sm:px-6">© {new Date().getFullYear()} {company.name}</div>
+</footer>

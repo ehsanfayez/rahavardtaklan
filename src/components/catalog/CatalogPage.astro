@@ -1,0 +1,86 @@
+---
+import HomepageHeader from "../HomepageHeader.astro";
+import HomepageFooter from "../HomepageFooter.astro";
+import CatalogFilters from "./CatalogFilters.astro";
+import CatalogProductCard from "./CatalogProductCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { listCatalogProducts } from "../../lib/product-detail-repository";
+import { company } from "../../data/company";
+import { PAGE_SIZE, filterAndSort, options, staticPageHref, type CatalogState } from "../../lib/catalog";
+import "../../styles/catalog.css";
+import { isProductIndexable } from "../../lib/product-publication";
+
+interface Props { initialPage?: number }
+const { initialPage = 1 } = Astro.props;
+const products = listCatalogProducts();
+const state: CatalogState = { q: "", category: "", brand: "", model: "", sort: "title-asc", page: initialPage };
+const sorted = filterAndSort(products, state);
+const pageCount = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
+const start = (initialPage - 1) * PAGE_SIZE;
+const number = new Intl.NumberFormat("fa-IR");
+---
+<BaseLayout noindex={products.some(product => !isProductIndexable(product))} title={`کاتالوگ محصولات ${company.name}`} description="مجموعه پمپ بنزین گیجدار و قطعات مرتبط با سیستم سوخت خودرو؛ مرور کاتالوگ و ارتباط با واحد فروش.">
+  <HomepageHeader activePath="/products/" />
+  <main class="catalog-page" data-catalog-page={initialPage} data-catalog-products={JSON.stringify(products)}>
+    <section class="catalog-hero relative isolate overflow-hidden bg-brand-navy text-white" aria-labelledby="catalog-title">
+      <div dir="ltr" class="catalog-container relative z-10 py-6 sm:py-7">
+        <div dir="rtl" class="catalog-hero-copy">
+          <nav aria-label="مسیر صفحه" class="mb-4 flex items-center gap-2 text-xs text-white/65"><a href="/" class="transition hover:text-cta-gold">صفحه اصلی</a><span aria-hidden="true">/</span><span aria-current="page" class="text-white">محصولات</span></nav>
+          <h1 id="catalog-title" class="text-2xl leading-relaxed font-black sm:text-3xl">کاتالوگ محصولات <span class="text-cta-gold">{company.name}</span></h1>
+          <p class="mt-2 text-base leading-[1.8] text-white/80">مجموعه پمپ بنزین گیجدار و قطعات مرتبط با سیستم سوخت خودرو</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog-container py-6 sm:py-7" aria-label="فهرست و فیلتر محصولات">
+      <div class="catalog-layout">
+        <aside class="catalog-sidebar" aria-label="فیلتر کاتالوگ"><CatalogFilters products={products} /></aside>
+        <div class="catalog-results min-w-0">
+          <div class="catalog-toolbar flex min-w-0 flex-wrap items-center justify-between gap-3 pb-4">
+            <p id="catalog-count" class="text-sm leading-6 text-content" role="status" aria-live="polite" aria-atomic="true">نمایش {number.format(Math.min(PAGE_SIZE, sorted.length - start))} محصول از {number.format(sorted.length)} محصول</p>
+            <div class="flex items-center gap-2">
+              <label for="catalog-sort" class="text-xs text-content-muted">مرتب‌سازی:</label>
+              <select id="catalog-sort" class="catalog-control catalog-sort text-xs" aria-controls="catalog-grid">
+                <option value="title-asc">عنوان صعودی</option>
+                <option value="title-desc">عنوان نزولی</option>
+                {options(products).hasSku && <option value="sku">کد محصول</option>}
+              </select>
+            </div>
+          </div>
+          <p class="mb-4 text-xs leading-5 text-content-muted">پیش‌نمایش کاتالوگ؛ تصاویر و اطلاعات این محصولات نمایشی و تأییدنشده برای انتشار هستند.</p>
+          <div id="catalog-grid" class="catalog-grid">
+            {sorted.map((product, index) => <CatalogProductCard product={product} hidden={index < start || index >= start + PAGE_SIZE} />)}
+          </div>
+          <div id="catalog-empty" hidden class="rounded-card border border-dashed border-border-strong bg-white px-5 py-14 text-center">
+            <h2 class="text-lg font-bold text-content">محصولی پیدا نشد</h2>
+            <p class="mt-2 text-sm leading-7 text-content-muted">عبارت جست‌وجو یا فیلترها را تغییر دهید.</p>
+            <a data-catalog-reset href="/products/" class="mt-5 inline-flex min-h-11 items-center rounded-control bg-cta-gold px-5 py-2 text-sm font-bold text-brand-navy hover:bg-cta-gold-hover">پاک کردن فیلترها</a>
+          </div>
+          <nav id="catalog-pagination" aria-label="صفحه‌بندی محصولات" class="mt-5 flex flex-wrap items-center justify-center gap-2">
+            <a data-page="previous" href={initialPage > 1 ? staticPageHref(initialPage - 1) : undefined} aria-disabled={initialPage === 1 ? "true" : undefined} aria-label="صفحه قبلی" class="catalog-page-link">→</a>
+            {Array.from({ length: pageCount }, (_, index) => <a data-page={index + 1} href={staticPageHref(index + 1)} aria-current={initialPage === index + 1 ? "page" : undefined} aria-label={`صفحه ${number.format(index + 1)}`} class="catalog-page-link">{number.format(index + 1)}</a>)}
+            <a data-page="next" href={initialPage < pageCount ? staticPageHref(initialPage + 1) : undefined} aria-disabled={initialPage === pageCount ? "true" : undefined} aria-label="صفحه بعدی" class="catalog-page-link">←</a>
+          </nav>
+          <noscript><p class="mt-4 text-sm leading-7 text-content-muted">مرور محصولات و لینک‌های صفحه‌بندی بدون جاوااسکریپت در دسترس است. جست‌وجو، فیلتر و مرتب‌سازی به جاوااسکریپت نیاز دارند.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog-contact relative isolate overflow-hidden bg-brand-navy text-white" aria-labelledby="catalog-contact-title">
+      <div class="catalog-container relative z-10 flex flex-col items-start justify-between gap-5 py-7 lg:flex-row lg:items-center">
+        <div class="lg:max-w-[70%]">
+          <h2 id="catalog-contact-title" class="text-xl leading-relaxed font-black sm:text-2xl">برای انتخاب <span class="text-cta-gold">قطعه مناسب</span> نیاز به راهنمایی دارید؟</h2>
+          <p class="mt-2 text-base leading-[1.8] text-white/75">برای بررسی مشخصات، موجودی و شرایط همکاری با واحد فروش تماس بگیرید.</p>
+        </div>
+        <a href={`tel:${company.phone}`} class="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-control bg-cta-gold px-6 py-3 text-sm font-bold whitespace-nowrap text-brand-navy transition hover:bg-cta-gold-hover">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.7"><path d="m7 3 3 5-2.2 2.2a15 15 0 0 0 6 6L16 14l5 3-1 4C10 22 2 14 3 4l4-1Z" stroke-linecap="round" stroke-linejoin="round"/></svg>تماس با واحد فروش
+        </a>
+      </div>
+    </section>
+  </main>
+  <HomepageFooter />
+</BaseLayout>
+
+<script>
+  import "../../scripts/catalog";
+</script>

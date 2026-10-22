@@ -1,0 +1,22 @@
+---
+import type { ProductImage } from "../../types/product-detail";
+interface Props { images: ProductImage[]; notice?: string }
+const { images, notice } = Astro.props;
+const [first] = images;
+const multiple = images.length > 1;
+const number = new Intl.NumberFormat("fa-IR");
+---
+<section class="detail-gallery detail-panel" data-product-gallery aria-label="گالری تصاویر محصول">
+  <div class="detail-gallery-stage relative" tabindex={multiple ? "0" : undefined} aria-label={multiple ? "تصویر محصول؛ کلید چپ تصویر بعدی و کلید راست تصویر قبلی" : undefined}>
+    {first ? <img data-gallery-main src={first.src} alt={first.alt} width={first.width} height={first.height} decoding="async" class="h-full w-full object-contain" /> : <p class="text-sm text-content-muted">تصویری برای این محصول ارائه نشده است.</p>}
+    {multiple && <div data-gallery-controls hidden>
+      <button type="button" data-gallery-previous class="detail-gallery-arrow right-2" aria-label="تصویر قبلی">→</button>
+      <button type="button" data-gallery-next class="detail-gallery-arrow left-2" aria-label="تصویر بعدی">←</button>
+    </div>}
+  </div>
+  {multiple && <div data-gallery-thumbnails hidden class="detail-thumbnails">
+    {images.map((image, index) => <button type="button" data-gallery-thumb data-src={image.src} data-alt={image.alt} aria-label={`انتخاب تصویر آزمایشی ${number.format(index + 1)}`} aria-current={index === 0 ? "true" : undefined} class="detail-thumbnail"><img src={image.src} alt="" width={image.width} height={image.height} loading="lazy" decoding="async" class="h-full w-full object-contain" /></button>)}
+  </div>}
+  <p data-gallery-status class="mt-2 text-center text-xs text-content-muted" role="status" aria-live="polite">{images.length ? `تصویر ${number.format(1)} از ${number.format(images.length)}` : ""}</p>
+  {notice && <p class="mt-2 text-right text-xs leading-6 text-content-muted">{notice}</p>}
+</section>

@@ -1,0 +1,67 @@
+---
+import { company } from "../data/company";
+
+interface Props {
+  showSearch?: boolean;
+}
+
+const { showSearch = false } = Astro.props;
+const pathname = Astro.url.pathname;
+const links = [
+  { label: "صفحه اصلی", href: "/" },
+  { label: "محصولات", href: "/products/" },
+  { label: "درباره ما", href: "/about/" },
+  { label: "تماس با ما", href: "/contact/" },
+];
+
+const isActive = (href: string) => href === "/products/"
+  ? pathname.startsWith("/products/")
+  : pathname === href;
+---
+
+<header class="sticky top-0 z-40 border-b border-white/10 bg-brand-navy text-white shadow-[0_12px_32px_-28px_rgba(0,0,0,0.8)]">
+  <div class="hidden border-b border-white/10 bg-brand-navy-deep sm:block">
+    <div class="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-2 text-[11px] text-white/65 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <a href={`tel:${company.phone}`} dir="ltr" class="inline-flex items-center gap-2 transition hover:text-cta-gold"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-3.5 w-3.5 fill-none stroke-current" stroke-width="1.8"><path d="M7 3H4.8A1.8 1.8 0 0 0 3 4.8C3 13.7 10.3 21 19.2 21a1.8 1.8 0 0 0 1.8-1.8V17l-4.6-1.2-1.7 2.2a16 16 0 0 1-6.7-6.7L10.2 9 9 4.4 7 3Z" stroke-linejoin="round" /></svg>{company.phoneDisplay}</a>
+        <span class="hidden items-center gap-2 lg:inline-flex"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-3.5 w-3.5 fill-none stroke-current" stroke-width="1.8"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.2"/></svg>{company.address}</span>
+      </div>
+      <span class="hidden items-center gap-2 md:inline-flex">ساعات کاری: {company.workingHours[0].days}، {company.workingHours[0].hours}</span>
+    </div>
+  </div>
+
+  <div class="mx-auto flex max-w-[1280px] items-center justify-between gap-3 px-3 py-3 sm:px-6 lg:px-8">
+    <a href="/" class="flex min-w-0 shrink-0 items-center gap-2.5" aria-label={`${company.name}، صفحه اصلی`}>
+      <span class="brand-mark h-10 w-10 rounded-lg border-0 sm:h-12 sm:w-12"><img src="/Logo.png" alt={`نشان تصویری ${company.name}`} width="512" height="512" /></span>
+      <span class="min-w-0">
+        <span class="block truncate text-sm font-black tracking-tight text-white sm:text-lg">{company.name}</span>
+        <span class="mt-0.5 hidden text-[10px] text-white/55 sm:block">کاتالوگ همکاری تجاری</span>
+      </span>
+    </a>
+
+    {showSearch && <div role="search" class="hidden w-full max-w-[250px] items-center rounded-full border border-white/15 bg-white/5 px-3 py-2.5 transition focus-within:border-cta-gold/70 lg:flex">
+      <label for="featured-product-search" class="sr-only">جست‌وجو در محصولات منتخب</label>
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 shrink-0 fill-none stroke-white/50" stroke-width="1.8"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2" stroke-linecap="round"/></svg>
+      <input id="featured-product-search" type="search" autocomplete="off" placeholder="جست‌وجوی محصول..." class="min-w-0 flex-1 bg-transparent px-2 text-xs text-white outline-none placeholder:text-white/40" />
+    </div>}
+
+    <nav class="hidden items-center gap-1 xl:flex" aria-label="ناوبری اصلی">
+      {links.map((link) => (
+        <a href={link.href} aria-current={isActive(link.href) ? "page" : undefined} class:list={["rounded-lg px-3 py-2 text-xs font-bold transition-colors hover:text-cta-gold", isActive(link.href) ? "text-cta-gold" : "text-white/80"]}>{link.label}</a>
+      ))}
+    </nav>
+
+    <div class="flex shrink-0 items-center gap-2">
+      <a href="/contact/" class="hidden items-center gap-2 rounded-full bg-cta-gold px-4 py-2.5 text-xs font-black text-brand-navy transition hover:bg-cta-gold-hover focus-visible:outline-offset-4 sm:inline-flex">ارتباط با واحد فروش <span aria-hidden="true">↗</span></a>
+      <details class="group relative xl:hidden">
+        <summary class="flex h-10 cursor-pointer list-none items-center gap-2 rounded-lg border border-white/15 px-3 text-xs font-bold text-white transition hover:border-cta-gold hover:text-cta-gold focus-visible:outline-offset-2" aria-label="باز کردن منوی اصلی">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" /></svg><span class="hidden sm:inline">فهرست</span>
+        </summary>
+        <nav class="absolute left-0 top-12 flex w-[min(18rem,calc(100vw-1.5rem))] flex-col gap-1 rounded-xl border border-white/10 bg-brand-navy-deep p-2 shadow-xl" aria-label="ناوبری موبایل">
+          {links.map((link) => <a href={link.href} aria-current={isActive(link.href) ? "page" : undefined} class:list={["rounded-lg px-3 py-3 text-sm font-semibold transition hover:bg-white/5 hover:text-cta-gold", isActive(link.href) ? "text-cta-gold" : "text-white/80"]}>{link.label}</a>)}
+          <a href="/contact/" class="mt-1 rounded-lg bg-cta-gold px-3 py-3 text-sm font-black text-brand-navy">ارتباط با واحد فروش</a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,57 @@
+/* Scoped to product detail pages; shared Home/Catalog styles are untouched. */
+.product-detail { color: var(--content); text-align: right; }
+.product-detail :focus-visible { outline-color: var(--cta-gold-hover); }
+.detail-container { max-width: 1200px; margin-inline: auto; padding-inline: 16px; min-width: 0; }
+.detail-banner { background: var(--brand-navy); color: white; position: relative; isolation: isolate; overflow: hidden; }
+.detail-banner::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .35; background: linear-gradient(90deg,var(--brand-navy),transparent),url('/images/fuel-gauge-reference.png') right 56% / 340px auto no-repeat; }
+.detail-banner h1 { max-width: 1000px; overflow-wrap: anywhere; }
+.detail-overview { display: grid; grid-template-columns: minmax(0,1fr); gap: 16px; align-items: stretch; }
+.detail-panel { border: 1px solid var(--border-subtle); border-radius: var(--radius-control); padding: 16px; background: white; min-width: 0; }
+.detail-info { order: 2; }
+.detail-gallery { order: 1; display: flex; flex-direction: column; min-width: 0; }
+.detail-gallery-stage { height: 260px; display: flex; align-items: center; justify-content: center; padding: 4px 32px; }
+.detail-gallery-arrow { position: absolute; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; height: 40px; width: 40px; border: 1px solid var(--border-subtle); border-radius: 999px; background: rgb(255 255 255 / 94%); font-size: 18px; color: var(--content); cursor: pointer; box-shadow: var(--shadow-soft); }
+.detail-gallery-arrow:hover { border-color: var(--cta-gold); }
+.detail-thumbnails { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; margin-top: 12px; }
+.detail-thumbnails[hidden] { display: none; }
+.detail-thumbnail { height: 64px; min-width: 0; padding: 4px; border: 1px solid var(--border-subtle); border-radius: 6px; cursor: pointer; }
+.detail-thumbnail[aria-current="true"] { border-color: var(--cta-gold-hover); box-shadow: inset 0 0 0 1px var(--cta-gold); }
+.detail-metadata { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin-block: 16px 10px; border: 1px solid var(--border-subtle); border-radius: 6px; background: var(--surface-alt); }
+.detail-metadata > div { padding: 10px; min-width: 0; }
+.detail-metadata dt { font-size: 12px; color: var(--content-muted); }
+.detail-metadata dd { margin-top: 5px; font-size: 13px; line-height: 1.8; overflow-wrap: anywhere; }
+.detail-actions { display: grid; grid-template-columns: minmax(0,1fr); gap: 10px; margin-top: 12px; }
+.detail-button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; border-radius: var(--radius-control); padding: 10px 14px; font-size: 14px; font-weight: 700; line-height: 1.7; text-align: right; }
+.detail-tables { display: grid; grid-template-columns: minmax(0,1fr); gap: 16px; margin-top: 16px; align-items: stretch; }
+.detail-section-title { display: flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.8; font-weight: 800; margin-bottom: 12px; }
+.detail-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: right; line-height: 1.8; }
+.detail-table td,.detail-table th { border: 1px solid var(--border-subtle); padding: 8px 10px; vertical-align: top; }
+.detail-table th { font-weight: 600; }
+.detail-table tr:nth-child(odd) { background: var(--surface-alt); }
+.detail-specifications { table-layout: fixed; }
+.detail-specifications th { width: 31%; }
+.detail-specifications td { overflow-wrap: anywhere; color: var(--content-muted); }
+.detail-table-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
+.detail-fitments { min-width: 520px; }
+.detail-fitments td { color: var(--content-muted); }
+.detail-fitments td:nth-child(3) { white-space: nowrap; }
+.detail-empty { font-size: 14px; line-height: 2; padding: 12px 0; color: var(--content-muted); }
+.detail-related { display: grid; grid-template-columns: minmax(0,1fr); gap: 12px; }
+.detail-related-card { display: grid; grid-template-columns: minmax(0,1fr) 105px; min-height: 134px; border: 1px solid var(--border-subtle); border-radius: var(--radius-control); padding: 12px; background: white; min-width: 0; }
+.detail-contact { position: relative; isolation: isolate; overflow: hidden; background: var(--brand-navy); color: white; border-radius: var(--radius-control); }
+.detail-contact::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .18; background: linear-gradient(90deg,transparent,var(--brand-navy) 55%),url('/images/banners/about-car.webp') left center / cover no-repeat; }
+@media(min-width:640px) {
+  .detail-container { padding-inline: 24px; }
+  .detail-panel { padding: 18px; }
+  .detail-gallery-stage { height: 310px; }
+  .detail-actions { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media(min-width:1024px) {
+  .detail-overview { grid-template-columns: minmax(0,1.45fr) minmax(0,1fr); }
+  .detail-info { order: 1; }
+  .detail-gallery { order: 2; }
+  .detail-gallery-stage { flex: 1; min-height: 280px; max-height: 420px; }
+  .detail-metadata { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .detail-tables { grid-template-columns: minmax(0,1fr) minmax(0,1.25fr); }
+  .detail-related { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}

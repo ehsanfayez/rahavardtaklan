@@ -1,0 +1,24 @@
+/* All page-specific styles stay scoped to the contact page. */
+.contact-page { color: var(--content); text-align: right; }
+.contact-page :focus-visible { outline-color: var(--cta-gold-hover); }
+.contact-container { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: 16px; min-width: 0; }
+.contact-hero { position: relative; isolation: isolate; overflow: hidden; color: white; background: var(--brand-navy); }
+.contact-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg,rgb(8 19 28 / 12%),rgb(8 19 28 / 74%) 40%,var(--brand-navy) 82%),url('/images/banners/about-car.webp') left center / cover no-repeat; }
+.contact-layout { display: grid; grid-template-columns: minmax(0,1fr); gap: 16px; align-items: start; direction: ltr; }
+.contact-layout > * { direction: rtl; min-width: 0; }
+.contact-panel { border: 1px solid var(--border-subtle); border-radius: var(--radius-control); padding: 18px; background: white; min-width: 0; }
+.contact-section-title { display: flex; align-items: center; gap: 10px; font-size: 18px; line-height: 1.8; font-weight: 800; }
+.contact-label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 700; line-height: 1.8; }
+.contact-control { display: block; width: 100%; min-width: 0; max-width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: 6px; background: white; color: var(--content); font-size: 16px; line-height: 1.6; }
+.contact-control::placeholder { color: var(--content-muted); font-size: 14px; }
+.contact-control[aria-invalid="true"] { border-color: #b4232a; }
+.contact-error { margin-top: 6px; font-size: 13px; line-height: 1.8; color: #b4232a; }
+.contact-selected-product { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 12px; border: 1px solid var(--border-subtle); border-radius: 6px; background: var(--surface-alt); }
+.contact-selected-product[hidden] { display: none; }
+.contact-selected-product p { overflow-wrap: anywhere; }
+.contact-information-row { display: flex; align-items: start; gap: 14px; padding-block: 16px; }
+.contact-information-row:last-child { padding-bottom: 0; }
+.contact-information-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex-shrink: 0; border-radius: var(--radius-control); background: color-mix(in srgb,var(--cta-gold) 13%,white); color: var(--cta-gold-hover); }
+@media(min-width:640px) { .contact-container { padding-inline: 24px; } .contact-panel { padding: 20px; } }
+@media(min-width:1024px) { .contact-container { padding-inline: 32px; } .contact-layout { grid-template-columns: minmax(0,1.6fr) minmax(0,1fr); gap: 18px; } }
+@media(max-width:639px) { .contact-hero::before { background-image: linear-gradient(90deg,rgb(8 19 28 / 82%),var(--brand-navy)),url('/images/banners/about-car.webp'); } .contact-selected-product { gap: 8px; padding: 10px; } .contact-selected-product img { width: 48px; height: 56px; } }

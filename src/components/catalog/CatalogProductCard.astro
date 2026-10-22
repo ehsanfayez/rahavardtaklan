@@ -1,0 +1,19 @@
+---
+import { details, type CatalogProduct } from "../../lib/catalog";
+interface Props { product: CatalogProduct; hidden?: boolean }
+const { product, hidden = false } = Astro.props;
+const data = details(product);
+---
+<article hidden={hidden} data-catalog-card={product.slug} dir="rtl" class="catalog-card group relative min-w-0 overflow-hidden rounded-card border border-border-subtle bg-white transition hover:border-cta-gold/65 hover:shadow-soft">
+  <div class="catalog-card-copy">
+    <p class="text-xs text-content-muted">{data?.category ?? "پیش‌نمایش محصول"}</p>
+    <h2 title={product.name} class="mt-2 line-clamp-2 text-base leading-7 font-bold text-content">{product.name}</h2>
+    {product.sku && <p class="mt-1 text-xs text-content-muted">{product.skuKind === "reference-derived-display" ? "کد نمایشی:" : "کد:"} <bdi class="font-medium text-content">{product.sku}</bdi></p>}
+    {data?.compatibilitySummary && <p class="mt-1 text-sm leading-6 text-content-muted">{data.compatibilitySummary}</p>}
+    {product.dataStatus !== "approved" && <p class="mt-1 text-xs leading-5 text-content-muted">اطلاعات در انتظار تأیید</p>}
+    <a href={`/products/${product.slug}/`} class="catalog-card-cta mt-auto inline-flex min-h-10 w-fit max-w-full items-center justify-center gap-2 self-start rounded-full border border-cta-gold px-3 py-2 text-xs font-bold whitespace-nowrap text-brand-navy transition hover:bg-cta-gold/15" aria-label={`مشاهده جزئیات ${product.name}`}>مشاهده جزئیات <span aria-hidden="true" class="text-lg leading-none text-cta-gold-hover">←</span></a>
+  </div>
+  <div class="catalog-card-image">
+    {product.image && <img src={product.image.src} alt={product.image.alt} width={product.image.width} height={product.image.height} loading="lazy" decoding="async" class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]" />}
+  </div>
+</article>

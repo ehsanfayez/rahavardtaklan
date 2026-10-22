@@ -1,0 +1,65 @@
+---
+import { requestTypes, type ContactProductOption } from "../../lib/contact-form";
+import { company } from "../../data/company";
+interface Props { products: ContactProductOption[] }
+const { products } = Astro.props;
+---
+<section class="contact-panel contact-form-panel" aria-labelledby="contact-form-title" data-contact-form-root data-products={JSON.stringify(products)}>
+  <h2 id="contact-form-title" class="contact-section-title"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-6 w-6 fill-none stroke-cta-gold-hover" stroke-width="1.6"><path d="m3 11 18-8-7 18-3-7-8-3Z" stroke-linejoin="round"/><path d="m11 14 10-11"/></svg>ثبت درخواست همکاری</h2>
+  <p class="mt-2 text-base leading-[1.8] text-content-muted">فرم زیر را تکمیل کنید تا کارشناسان واحد فروش با شما در ارتباط باشند.</p>
+  <form id="contact-request-form" class="mt-5" novalidate aria-describedby="contact-offline-notice">
+    <!-- Disabled until the local-only submit guard and validation handlers are attached. -->
+    <fieldset disabled data-contact-fields class="grid min-w-0 gap-x-4 gap-y-5 sm:grid-cols-2">
+      <legend class="sr-only">اطلاعات درخواست ارتباط؛ پیش‌نمایش بدون ارسال</legend>
+      <div>
+        <label for="contact-company" class="contact-label">نام شرکت یا فروشگاه <span aria-hidden="true" class="text-red-600">*</span></label>
+        <input id="contact-company" name="companyName" type="text" required minlength="2" maxlength="120" autocomplete="off" placeholder="نام شرکت یا فروشگاه را وارد کنید" aria-describedby="contact-company-error" class="contact-control" />
+        <p id="contact-company-error" data-contact-error="companyName" class="contact-error" role="status" hidden></p>
+      </div>
+      <div>
+        <label for="contact-phone" class="contact-label">شماره تماس <span aria-hidden="true" class="text-red-600">*</span></label>
+        <input id="contact-phone" name="phone" type="tel" inputmode="tel" required maxlength="32" autocomplete="off" dir="ltr" placeholder="09…" aria-describedby="contact-phone-help contact-phone-error" class="contact-control" />
+        <p id="contact-phone-help" class="mt-1.5 text-xs leading-5 text-content-muted">شماره موبایل با ارقام فارسی، عربی یا لاتین</p>
+        <p id="contact-phone-error" data-contact-error="phone" class="contact-error" role="status" hidden></p>
+      </div>
+      <div class="min-w-0 sm:col-span-2">
+        <label for="contact-product" class="contact-label">محصول موردنظر <span class="font-normal text-content-muted">(اختیاری)</span></label>
+        <div data-contact-product-picker>
+          <select id="contact-product" name="productSlug" class="contact-control" aria-describedby="contact-product-error">
+            <option value="">درخواست عمومی؛ بدون انتخاب محصول</option>
+            {products.map(product => <option value={product.slug}>{product.name}{product.sku ? ` — ${product.sku}` : ""}</option>)}
+          </select>
+        </div>
+        <div data-contact-selected hidden class="contact-selected-product" role="group" aria-label="محصول انتخاب‌شده">
+          <img data-contact-selected-image alt="" width="1254" height="1254" class="h-16 w-16 shrink-0 rounded-md bg-white object-contain" />
+          <div class="min-w-0 flex-1">
+            <p data-contact-selected-name class="text-sm leading-6 font-bold text-content"></p>
+            <p data-contact-selected-code-row class="mt-1 text-xs leading-5 text-content-muted" hidden><span data-contact-selected-code-label></span> <bdi dir="ltr" data-contact-selected-code></bdi></p>
+            <p data-contact-selected-status class="mt-1 text-xs leading-5 text-content-muted">تصویر و اطلاعات آزمایشی</p>
+          </div>
+          <button type="button" data-contact-clear-product class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xl text-content-muted transition hover:bg-white hover:text-content" aria-label="حذف محصول انتخاب‌شده">×</button>
+        </div>
+        <p id="contact-product-error" data-contact-error="productSlug" class="contact-error" role="status" hidden></p>
+      </div>
+      <div class="sm:col-span-2">
+        <label for="contact-request-type" class="contact-label">نوع درخواست <span aria-hidden="true" class="text-red-600">*</span></label>
+        <select id="contact-request-type" name="requestType" required class="contact-control" aria-describedby="contact-request-type-error">
+          {requestTypes.map(type => <option value={type.value}>{type.label}</option>)}
+        </select>
+        <p id="contact-request-type-error" data-contact-error="requestType" class="contact-error" role="status" hidden></p>
+      </div>
+      <div class="sm:col-span-2">
+        <label for="contact-message" class="contact-label">توضیحات <span class="font-normal text-content-muted">(اختیاری)</span></label>
+        <textarea id="contact-message" name="message" rows="3" maxlength="1000" autocomplete="off" placeholder="توضیحات و پرسش‌های خود را اینجا بنویسید..." aria-describedby="contact-message-help contact-message-error" class="contact-control resize-y"></textarea>
+        <p id="contact-message-help" class="mt-1.5 text-xs leading-5 text-content-muted">حداکثر ۱۰۰۰ کاراکتر</p>
+        <p id="contact-message-error" data-contact-error="message" class="contact-error" role="status" hidden></p>
+      </div>
+    </fieldset>
+    <div id="contact-offline-notice" class="mt-5 flex items-start gap-2 rounded-control border border-cta-gold/60 bg-cta-gold/10 px-4 py-3 text-sm leading-7 text-content">
+      <span aria-hidden="true" class="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-cta-gold-hover text-xs text-cta-gold-hover">i</span>
+      <p>ثبت آنلاین درخواست‌ها به‌زودی فعال می‌شود. برای دریافت اطلاعات بیشتر با واحد فروش تماس بگیرید. <a href={`tel:${company.phone}`} class="font-bold underline decoration-cta-gold underline-offset-4">{company.phoneDisplay}</a></p>
+    </div>
+    <button type="submit" disabled aria-describedby="contact-offline-notice" class="mt-3 inline-flex min-h-11 w-full cursor-not-allowed items-center justify-center gap-2 rounded-control bg-border-strong px-5 py-3 text-sm font-bold text-white">ارسال درخواست <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current" stroke-width="1.6"><path d="m3 11 18-8-7 18-3-7-8-3Zm8 3L21 3" stroke-linejoin="round"/></svg></button>
+    <noscript><p class="mt-3 text-sm leading-7 text-content-muted">برای پیش‌نمایش انتخاب محصول و اعتبارسنجی، جاوااسکریپت را فعال کنید. تماس مستقیم با فروش در دسترس است.</p></noscript>
+  </form>
+</section>

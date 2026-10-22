@@ -1,0 +1,43 @@
+<button
+  type="button"
+  data-theme-toggle
+  aria-label="فعال‌کردن تم تیره"
+  title="تغییر تم"
+  class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line text-ink-soft transition hover:border-brand hover:text-brand"
+>
+  <svg data-theme-icon="moon" aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5 fill-none stroke-current" stroke-width="1.7">
+    <path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.6 8.6 0 1 0 20.2 15.2Z" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+  <svg data-theme-icon="sun" aria-hidden="true" viewBox="0 0 24 24" class="hidden h-5 w-5 fill-none stroke-current" stroke-width="1.7">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke-linecap="round" />
+  </svg>
+</button>
+
+<script>
+  const themeButtons = document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]");
+  const themeKey = "rahavard-takalan-theme";
+
+  const updateThemeButton = (button: HTMLButtonElement, theme: string) => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    button.setAttribute("aria-label", `فعال‌کردن تم ${nextTheme === "dark" ? "تیره" : "روشن"}`);
+    button.setAttribute("title", `تغییر به تم ${nextTheme === "dark" ? "تیره" : "روشن"}`);
+    button.querySelector('[data-theme-icon="moon"]')?.classList.toggle("hidden", theme === "dark");
+    button.querySelector('[data-theme-icon="sun"]')?.classList.toggle("hidden", theme !== "dark");
+  };
+
+  for (const button of themeButtons) {
+    const currentTheme = document.documentElement.dataset.theme ?? "light";
+    updateThemeButton(button, currentTheme);
+    button.addEventListener("click", () => {
+      const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = nextTheme;
+      try {
+        localStorage.setItem(themeKey, nextTheme);
+      } catch {
+        // The current-page theme still works if browser storage is unavailable.
+      }
+      for (const themeButton of themeButtons) updateThemeButton(themeButton, nextTheme);
+    });
+  }
+</script>
