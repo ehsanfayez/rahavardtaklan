@@ -1,0 +1,26 @@
+services:
+  site:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NPM_REGISTRY: ${NPM_REGISTRY:-}
+    image: rahavardtaklan_site
+    container_name: rahavardtaklan_site
+    ports:
+      - "${SITE_PORT:-8687}:80"
+    networks:
+      - proxy
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.rahavardtaklan.loadbalancer.server.port=80
+      - traefik.http.routers.rahavardtaklan.rule=Host(`${SITE_DOMAIN:-rahavardtaklan.localhost}`)
+      - traefik.http.routers.rahavardtaklan.entrypoints=websecure
+      - traefik.http.routers.rahavardtaklan.tls.certresolver=letsencrypt
+      - traefik.http.routers.rahavardtaklan.service=rahavardtaklan
+
+networks:
+  proxy:
+    name: ${DOCKER_NETWORK:-jahan}
+    external: true
