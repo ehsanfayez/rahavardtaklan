@@ -1,7 +1,7 @@
 export const company = {
   name: "رهاورد تکلان",
-  phone: "09373020029",
-  phoneDisplay: "۰۹۳۷۳۰۲۰۰۲۹",
+  phone: "09373020028",
+  phoneDisplay: "۰۹۳۷۳۰۲۰۰۲۸",
   address: "تهران، خیابان سعدی جنوبی، خیابان اکباتان، کوچه آهنین، مجتمع تجاری آهنین، واحد ۲۲۰",
   // Location supplied and approved by the company owner.
   location: { latitude: 35.688851, longitude: 51.426723 },
