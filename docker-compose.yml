@@ -19,6 +19,21 @@ services:
       - traefik.http.routers.rahavardtaklan.entrypoints=websecure
       - traefik.http.routers.rahavardtaklan.tls.certresolver=letsencrypt
       - traefik.http.routers.rahavardtaklan.service=rahavardtaklan
+      # Permanently redirect other hostnames to SITE_DOMAIN, keeping path and query.
+      - traefik.http.middlewares.rahavardtaklan-canonical.redirectregex.regex=^https?://[^/]+(.*)$$
+      - traefik.http.middlewares.rahavardtaklan-canonical.redirectregex.replacement=https://${SITE_DOMAIN:-rahavardtaklan.localhost}$${1}
+      - traefik.http.middlewares.rahavardtaklan-canonical.redirectregex.permanent=true
+      # Separate routers: a failed certificate for one hostname must not affect the other.
+      - traefik.http.routers.rahavardtaklan-www.rule=Host(`www.${SITE_DOMAIN:-rahavardtaklan.localhost}`)
+      - traefik.http.routers.rahavardtaklan-www.entrypoints=websecure
+      - traefik.http.routers.rahavardtaklan-www.tls.certresolver=letsencrypt
+      - traefik.http.routers.rahavardtaklan-www.middlewares=rahavardtaklan-canonical
+      - traefik.http.routers.rahavardtaklan-www.service=rahavardtaklan
+      - traefik.http.routers.rahavardtaklan-legacy.rule=Host(`${SITE_LEGACY_DOMAIN:-rahavard.jahanrex.com}`)
+      - traefik.http.routers.rahavardtaklan-legacy.entrypoints=websecure
+      - traefik.http.routers.rahavardtaklan-legacy.tls.certresolver=letsencrypt
+      - traefik.http.routers.rahavardtaklan-legacy.middlewares=rahavardtaklan-canonical
+      - traefik.http.routers.rahavardtaklan-legacy.service=rahavardtaklan
 
 networks:
   proxy:
