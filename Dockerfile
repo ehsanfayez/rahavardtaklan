@@ -1,6 +1,6 @@
 # Static Astro site: build HTML/assets with Node, serve them with nginx.
 # No Node.js runtime in the final image (output: 'static').
-FROM node:26.7.0-alpine3.24 AS build
+FROM node:lts-alpine3.24 AS build
 WORKDIR /app
 
 ENV CI=true
